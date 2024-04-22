@@ -85,3 +85,86 @@ arr = [12, 11, 13, 5, 6]
 print("Array sebelum pengurutan:", arr)
 sorted_arr = insertion_sort(arr)
 print("Array setelah pengurutan:", sorted_arr)
+
+
+# linked list
+class Node:
+    def __init__(self, data):
+        self.data = data  # Data yang disimpan dalam simpul
+        self.next = None  # Referensi ke simpul berikutnya, awalnya None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None  # Kepala linked list, awalnya None
+
+    def append(self, data):
+        # Membuat simpul baru
+        new_node = Node(data)
+        # Jika linked list kosong, simpul baru menjadi kepala
+        if self.head is None:
+            self.head = new_node
+        else:
+            # Iterasi hingga akhir linked list
+            current = self.head
+            while current.next:
+                current = current.next
+            # Tambahkan simpul baru di akhir
+            current.next = new_node
+
+    def display(self):
+        # Tampilkan seluruh linked list
+        current = self.head
+        while current:
+            print(current.data, end=" -> ")
+            current = current.next
+        print("None")
+
+    def insert(self, index, data):
+        # Masukkan simpul baru pada posisi tertentu
+        new_node = Node(data)
+        # Jika index adalah 0, simpul baru menjadi kepala
+        if index == 0:
+            new_node.next = self.head
+            self.head = new_node
+            return
+        # Iterasi hingga posisi yang diinginkan
+        current = self.head
+        for _ in range(index - 1):
+            if current is None:
+                raise IndexError("Index out of range")
+            current = current.next
+        # Masukkan simpul baru di posisi yang diinginkan
+        new_node.next = current.next
+        current.next = new_node
+
+    def delete(self, index):
+        # Hapus simpul pada posisi tertentu
+        if index == 0:
+            # Hapus kepala linked list
+            self.head = self.head.next
+            return
+        # Iterasi hingga posisi yang diinginkan
+        current = self.head
+        for _ in range(index - 1):
+            if current.next is None:
+                raise IndexError("Index out of range")
+            current = current.next
+        # Hapus simpul pada posisi yang diinginkan
+        current.next = current.next.next
+
+# Contoh penggunaan
+ll = LinkedList()
+ll.append(10)
+ll.append(20)
+ll.append(30)
+print("Linked list setelah append:")
+ll.display()
+
+ll.insert(1, 15)
+print("\nLinked list setelah insert 15 pada index 1:")
+ll.display()
+
+ll.delete(2)
+print("\nLinked list setelah delete index 2:")
+ll.display()
+
